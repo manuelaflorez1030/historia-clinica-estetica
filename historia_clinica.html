@@ -631,7 +631,7 @@
         function goToStep(step) {
             if (step === 1 || step === 2) {
                 document.querySelectorAll('.content').forEach(el => el.classList.remove('active'));
-                document.getElementById(`step-${step}`).classList.add('active');
+                document.getElementById('step-' + step).classList.add('active');
                 document.querySelectorAll('.step').forEach((el, index) => {
                     el.classList.toggle('active', index + 1 === step);
                 });
@@ -639,7 +639,7 @@
         }
 
         function validateAndGoToStep(step) {
-            const consentCheckbox = document.getElementById('consent-agree');
+            var consentCheckbox = document.getElementById('consent-agree');
             if (!consentCheckbox.checked) {
                 alert('Por favor, acepta los términos y condiciones para continuar.');
                 return;
@@ -651,7 +651,7 @@
         document.getElementById('personal-form').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const formData = {
+            var formData = {
                 nombre: document.getElementById('nombre').value,
                 edad: document.getElementById('edad').value,
                 email: document.getElementById('email').value,
@@ -677,29 +677,28 @@
         });
 
         function sendDataToServer(data) {
-            // Reemplaza con tu URL de servidor/Google Sheets
-            const serverURL = 'https://script.google.com/macros/s/YOUR_GOOGLE_APPS_SCRIPT_ID/ussupp';
+            var serverURL = 'https://script.google.com/macros/s/AKfycbxgx_EENAkAp1zDVwurJdLBjl2b_AcsT3PeSA84MAqrMjkVwkvN5gZ-Vo1hbQOooNBA/ussupp';
             
             fetch(serverURL, {
                 method: 'POST',
                 body: JSON.stringify(data),
                 mode: 'no-cors'
             })
-            .then(response => {
+            .then(function(response) {
                 console.log('Datos enviados exitosamente');
                 showMessage('Datos personales guardados correctamente', 'success');
             })
-            .catch(error => {
+            .catch(function(error) {
                 console.error('Error:', error);
                 showMessage('Error al enviar datos. Se guardaron localmente.', 'error');
             });
         }
 
         function showMessage(message, type) {
-            const msgEl = document.getElementById(`${type}-msg`);
+            var msgEl = document.getElementById(type + '-msg');
             msgEl.textContent = message;
             msgEl.style.display = 'block';
-            setTimeout(() => {
+            setTimeout(function() {
                 msgEl.style.display = 'none';
             }, 5000);
         }
@@ -714,11 +713,11 @@
         }
 
         // ==================== GESTIÓN DE CANVAS - MAPA FACIAL ====================
-        const canvas = document.getElementById('faceCanvas');
-        const ctx = canvas.getContext('2d');
-        let findings = [];
-        let selectedType = null;
-        let selectedZone = null;
+        var canvas = document.getElementById('faceCanvas');
+        var ctx = canvas.getContext('2d');
+        var findings = [];
+        var selectedType = null;
+        var selectedZone = null;
 
         // Configurar dimensiones del canvas
         function resizeCanvas() {
@@ -733,9 +732,9 @@
         function drawFace() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             
-            const centerX = canvas.width / 2;
-            const centerY = canvas.height / 2;
-            const scale = Math.min(canvas.width, canvas.height) / 280;
+            var centerX = canvas.width / 2;
+            var centerY = canvas.height / 2;
+            var scale = Math.min(canvas.width, canvas.height) / 280;
 
             // Dibujar rostro base
             ctx.strokeStyle = '#999';
@@ -796,7 +795,7 @@
         }
 
         function drawFindings() {
-            const colorMap = {
+            var colorMap = {
                 'acne': '#FF0000',
                 'cicatriz': '#800080',
                 'poros': '#FFA500',
@@ -809,29 +808,29 @@
                 'efelides': '#DEB887'
             };
 
-            findings.forEach(finding => {
+            for (var i = 0; i < findings.length; i++) {
+                var finding = findings[i];
                 ctx.fillStyle = colorMap[finding.type];
                 ctx.beginPath();
                 ctx.arc(finding.x, finding.y, 6, 0, Math.PI * 2);
                 ctx.fill();
                 
-                // Borde
                 ctx.strokeStyle = '#333';
                 ctx.lineWidth = 2;
                 ctx.stroke();
-            });
+            }
         }
 
         // Eventos del canvas
-        canvas.addEventListener('mousedown', (e) => {
+        canvas.addEventListener('mousedown', function(e) {
             if (!selectedType) {
                 alert('Por favor, selecciona un tipo de imperfección primero.');
                 return;
             }
 
-            const rect = canvas.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
+            var rect = canvas.getBoundingClientRect();
+            var x = e.clientX - rect.left;
+            var y = e.clientY - rect.top;
 
             findings.push({
                 type: selectedType,
@@ -845,29 +844,31 @@
         });
 
         // Seleccionar tipo de hallazgo
-        document.querySelectorAll('input[name="finding-type"]').forEach(radio => {
-            radio.addEventListener('change', (e) => {
+        var radios = document.querySelectorAll('input[name="finding-type"]');
+        for (var i = 0; i < radios.length; i++) {
+            radios[i].addEventListener('change', function(e) {
                 selectedType = e.target.value;
             });
-        });
+        }
 
         function selectZone(zone) {
             selectedZone = zone;
-            document.querySelectorAll('.zone-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
+            var buttons = document.querySelectorAll('.zone-btn');
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].classList.remove('active');
+            }
             event.target.classList.add('active');
         }
 
         function updateFindingsList() {
-            const findingsList = document.getElementById('findings-list');
+            var findingsList = document.getElementById('findings-list');
             
             if (findings.length === 0) {
                 findingsList.innerHTML = '<li style="color: #999;">Sin hallazgos registrados aún...</li>';
                 return;
             }
 
-            const typeNames = {
+            var typeNames = {
                 'acne': 'Acné',
                 'cicatriz': 'Cicatriz',
                 'poros': 'Poros Abiertos',
@@ -880,12 +881,12 @@
                 'efelides': 'Efelides'
             };
 
-            findingsList.innerHTML = findings.map((f, i) => {
-                return `<li>
-                    <strong>${typeNames[f.type]}</strong> - Zona: ${f.zone}
-                    <button onclick="removeFinding(${i})" style="float: right; background: #ff6b6b; color: white; border: none; padding: 2px 8px; border-radius: 3px; cursor: pointer; font-size: 0.8em;">Eliminar</button>
-                </li>`;
-            }).join('');
+            var html = '';
+            for (var i = 0; i < findings.length; i++) {
+                var f = findings[i];
+                html += '<li><strong>' + typeNames[f.type] + '</strong> - Zona: ' + f.zone + '<button onclick="removeFinding(' + i + ')" style="float: right; background: #ff6b6b; color: white; border: none; padding: 2px 8px; border-radius: 3px; cursor: pointer; font-size: 0.8em;">Eliminar</button></li>';
+            }
+            findingsList.innerHTML = html;
         }
 
         function removeFinding(index) {
@@ -899,46 +900,62 @@
                 findings = [];
                 selectedType = null;
                 selectedZone = null;
-                document.querySelectorAll('input[name="finding-type"]').forEach(r => r.checked = false);
-                document.querySelectorAll('.zone-btn').forEach(btn => btn.classList.remove('active'));
+                var radios = document.querySelectorAll('input[name="finding-type"]');
+                for (var i = 0; i < radios.length; i++) {
+                    radios[i].checked = false;
+                }
+                var buttons = document.querySelectorAll('.zone-btn');
+                for (var i = 0; i < buttons.length; i++) {
+                    buttons[i].classList.remove('active');
+                }
                 updateFindingsList();
                 drawFace();
             }
         }
 
         function saveFaceData() {
-            const formData = JSON.parse(localStorage.getItem('formData') || '{}');
-            const allData = {
-                ...formData,
+            var formDataStr = localStorage.getItem('formData') || '{}';
+            var formData = JSON.parse(formDataStr);
+            var allData = {
+                nombre: formData.nombre,
+                edad: formData.edad,
+                email: formData.email,
+                telefono: formData.telefono,
+                fecha: formData.fecha,
+                tipo_piel: formData.tipo_piel,
+                alergias: formData.alergias,
+                medicamentos: formData.medicamentos,
+                antecedentes: formData.antecedentes,
+                objetivos: formData.objetivos,
+                tratamientos_previos: formData.tratamientos_previos,
                 findings: findings,
                 timestamp: new Date().toISOString()
             };
 
             localStorage.setItem('completeFormData', JSON.stringify(allData));
 
-            // Enviar al servidor
-            const serverURL = 'https://script.google.com/macros/s/YOUR_GOOGLE_APPS_SCRIPT_ID/ussupp';
+            var serverURL = 'https://script.google.com/macros/s/AKfycbxgx_EENAkAp1zDVwurJdLBjl2b_AcsT3PeSA84MAqrMjkVwkvN5gZ-Vo1hbQOooNBA/ussupp';
             
             fetch(serverURL, {
                 method: 'POST',
                 body: JSON.stringify(allData),
                 mode: 'no-cors'
             })
-            .then(() => {
+            .then(function() {
                 alert('¡Historia clínica completada y guardada exitosamente!');
                 console.log('Datos guardados:', allData);
             })
-            .catch(error => {
+            .catch(function(error) {
                 console.error('Error:', error);
                 alert('Datos guardados localmente. Se encontró un error al enviar al servidor.');
             });
         }
 
         // Cargar datos si existen
-        window.addEventListener('load', () => {
-            const savedData = localStorage.getItem('formData');
+        window.addEventListener('load', function() {
+            var savedData = localStorage.getItem('formData');
             if (savedData) {
-                const data = JSON.parse(savedData);
+                var data = JSON.parse(savedData);
                 document.getElementById('nombre').value = data.nombre || '';
                 document.getElementById('edad').value = data.edad || '';
                 document.getElementById('email').value = data.email || '';
