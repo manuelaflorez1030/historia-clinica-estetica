@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historia Clínica Estética</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .step-indicator {
+            display: flex;
+            justify-content: space-between;
+            background: #f8f9fa;
+            padding: 20px 30px;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            opacity: 0.5;
+            transition: all 0.3s ease;
+        }
+
+        .step.active {
+            opacity: 1;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .step.active .step-number {
+            background: #667eea;
+            color: white;
+        }
+
+        .content {
+            padding: 40px;
+            display: none;
+        }
+
+        .content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .consent-section {
+            margin-bottom: 30px;
+        }
+
+        .consent-section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .consent-text {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="tel"],
+        .form-group input[type="date"],
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1em;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .checkbox-group label {
+            margin: 0;
+            cursor: pointer;
+            font-weight: normal;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        button {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            flex: 1;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #e9ecef;
+            color: #333;
+            flex: 1;
+        }
+
+        .btn-secondary:hover {
+            background: #dee2e6;
+        }
+
+        /* Face Map Styles */
+        .face-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .face-diagram {
+            position: relative;
+            width: 300px;
+            height: 400px;
+            margin: 0 auto;
+        }
+
+        .face-canvas {
+            width: 100%;
+            height: 100%;
+            border: 3px solid #667eea;
+            border-radius: 10px;
+            cursor: crosshair;
+            background: #f9f9f9;
+        }
+
+        .legend {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .legend-color {
+            width: 30px;
+            height: 30px;
+            border-radius: 5px;
+            border: 2px solid #ddd;
+        }
+
+        .legend-item label {
+            margin: 0;
+            cursor: pointer;
+            font-weight: normal;
+            font-size: 0.95em;
+        }
+
+        .legend-item input[type="radio"] {
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+        }
+
+        .face-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .face-info h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .findings-list {
+            list-style: none;
+        }
+
+        .findings-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #e9ecef;
+            color: #555;
+        }
+
+        .findings-list li:last-child {
+            border-bottom: none;
+        }
+
+        .coordinates {
+            margin-top: 15px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .face-zones {
+            margin-top: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+        }
+
+        .zone-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .zone-btn {
+            padding: 10px;
+            border: 2px solid #e9ecef;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .zone-btn:hover,
+        .zone-btn.active {
+            border-color: #667eea;
+            background: #f0f4ff;
+            color: #667eea;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .face-container {
+                grid-template-columns: 1fr;
+            }
+
+            .legend {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .step-indicator {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .step {
+                flex: 0 0 calc(50% - 5px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📋 Historia Clínica Estética</h1>
+            <p>Centro Estético Integral Balmes</p>
+        </div>
+
+        <div class="step-indicator">
+            <div class="step active" onclick="goToStep(1)">
+                <div class="step-number">1</div>
+                <span>Consentimiento</span>
+            </div>
+            <div class="step" onclick="goToStep(2)">
+                <div class="step-number">2</div>
+                <span>Datos Personales</span>
+            </div>
+            <div class="step" onclick="goToStep(3)">
+                <div class="step-number">3</div>
+                <span>Diagnóstico Facial</span>
+            </div>
+        </div>
+
+        <!-- PASO 1: CONSENTIMIENTO -->
+        <div class="content active" id="step-1">
+            <div class="consent-section">
+                <h2>📜 Consentimiento Informado</h2>
+                <div class="consent-text">
+                    <p><strong>CENTRO ESTÉTICO INTEGRAL BALMES</strong></p>
+                    <p style="margin-top: 15px;">Yo, abajo firmante, declaro que he recibido información clara y completa sobre los procedimientos, tratamientos y evaluaciones estéticas que seré sometido/a en el Centro Estético Integral Balmes.</p>
+                </div>
+            </div>
+
+            <div class="consent-section">
+                <h2>✅ Términos y Condiciones</h2>
+                <div class="consent-text">
+                    <p><strong>1. Evaluación y Diagnóstico:</strong> Entiendo que seré sometido a una evaluación completa del rostro para identificar posibles imperfecciones, cicatrices, poros abiertos, y otras condiciones dermatológicas.</p>
+                    
+                    <p style="margin-top: 10px;"><strong>2. Confidencialidad:</strong> Mis datos personales serán tratados de manera confidencial y conforme a las leyes de protección de datos. Solo serán utilizados para propósitos médicos y estéticos.</p>
+                    
+                    <p style="margin-top: 10px;"><strong>3. Fotografías y Registros:</strong> Autorizo la toma de fotografías de mi rostro para propósitos de documentación clínica y seguimiento del tratamiento.</p>
+                    
+                    <p style="margin-top: 10px;"><strong>4. Recomendaciones Profesionales:</strong> Acepto seguir las recomendaciones del profesional estético respecto a los tratamientos propuestos.</p>
+                    
+                    <p style="margin-top: 10px;"><strong>5. Riesgos y Beneficios:</strong> He sido informado/a sobre los posibles riesgos, beneficios y alternativas de los tratamientos propuestos.</p>
+                    
+                    <p style="margin-top: 10px;"><strong>6. Compensación:</strong> Renuncio a cualquier reclamación económica por daños o perjuicios derivados del tratamiento.</p>
+                </div>
+            </div>
+
+            <div class="consent-section">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="consent-agree" />
+                    <label for="consent-agree">He leído y entiendo todos los términos. Doy mi consentimiento informado para continuar.</label>
+                </div>
+            </div>
+
+            <div class="buttons">
+                <button class="btn-secondary" onclick="resetForm()">Cancelar</button>
+                <button class="btn-primary" onclick="validateAndGoToStep(2)">Continuar</button>
+            </div>
+        </div>
+
+        <!-- PASO 2: DATOS PERSONALES -->
+        <div class="content" id="step-2">
+            <div class="success-message" id="success-msg"></div>
+            <div class="error-message" id="error-msg"></div>
+
+            <h2 style="color: #667eea; margin-bottom: 25px; font-size: 1.5em;">📝 Datos Personales</h2>
+
+            <form id="personal-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="nombre">Nombre Completo *</label>
+                        <input type="text" id="nombre" name="nombre" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="edad">Edad *</label>
+                        <input type="text" id="edad" name="edad" required />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="email">Correo Electrónico *</label>
+                        <input type="email" id="email" name="email" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="telefono">Teléfono *</label>
+                        <input type="tel" id="telefono" name="telefono" required />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="fecha">Fecha de Consulta *</label>
+                        <input type="date" id="fecha" name="fecha" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="tipo-piel">Tipo de Piel *</label>
+                        <select id="tipo-piel" name="tipo-piel" required>
+                            <option value="">Seleccionar...</option>
+                            <option value="normal">Normal</option>
+                            <option value="grasa">Grasa</option>
+                            <option value="seca">Seca</option>
+                            <option value="mixta">Mixta</option>
+                            <option value="sensible">Sensible</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="alergias">Alergias Conocidas</label>
+                        <input type="text" id="alergias" name="alergias" />
+                    </div>
+                    <div class="form-group">
+                        <label for="medicamentos">Medicamentos Actuales</label>
+                        <input type="text" id="medicamentos" name="medicamentos" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="antecedentes">Antecedentes Médicos/Dermatológicos</label>
+                    <textarea id="antecedentes" name="antecedentes" rows="4" placeholder="Describa cualquier condición médica relevante..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="objetivos">Objetivos del Tratamiento *</label>
+                    <textarea id="objetivos" name="objetivos" rows="4" placeholder="¿Cuál es el objetivo principal de su consulta?" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="tratamientos-previos">Tratamientos Estéticos Previos</label>
+                    <textarea id="tratamientos-previos" name="tratamientos-previos" rows="3" placeholder="Describa tratamientos previos..."></textarea>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="data-protection" />
+                    <label for="data-protection">He leído y acepto la Política de Protección de Datos</label>
+                </div>
+
+                <div class="buttons">
+                    <button type="button" class="btn-secondary" onclick="goToStep(1)">Atrás</button>
+                    <button type="submit" class="btn-primary">Continuar</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- PASO 3: DIAGNÓSTICO FACIAL -->
+        <div class="content" id="step-3">
+            <h2 style="color: #667eea; margin-bottom: 25px; font-size: 1.5em;">👤 Mapa Facial - Diagnóstico</h2>
+
+            <p style="color: #666; margin-bottom: 20px; font-size: 1em;">Selecciona el tipo de imperfección en la leyenda y haz clic en el lienzo para marcarla en el rostro. Los colores corresponden a diferentes condiciones dermatológicas.</p>
+
+            <div class="face-container">
+                <div>
+                    <div class="face-diagram">
+                        <canvas id="faceCanvas" class="face-canvas"></canvas>
+                    </div>
+                    <div class="coordinates" id="coordinates">Coordenadas: Esperando clic...</div>
+                </div>
+
+                <div>
+                    <div class="legend">
+                        <div class="legend-item">
+                            <input type="radio" name="finding-type" value="acne" id="acne" />
+                            <div class="legend-color" style="background: #FF0000;"></div>
+                            <label for="acne">Acné</label>
+                        </div>
+                        <div class="legend-item">
+                            <input type="radio" name="finding-type" value="cicatriz" id="cicatriz" />
+                            <div class="legend-color" style="background: #800080;"></div>
+                            <label for="cicatriz">Cicatriz</label>
+                        </div>
+                        <div class="legend-item">
+                            <input type="radio" name="finding-type" value="poros" id="poros" />
+                            <div class="legend-color" style="background: #FFA500;"></div>
+                            <label for="poros">Poros Abiertos</label>
+                        </div>
+                        <div class="legend-item">
+                            <input type="radio" name="finding-type" value="telangiectasis" id="telangiectasis" />
+                            <div class="legend-color" style="background: #FF6B6B;"></div>
+                            <label for="telangiectasis">Telangiectasis</label>
+                        </div>
+                        <div class="legend-item">
+                            <input type="radio" name="finding-type" value="comedones" id="comedones" />
+                            <div class="legend-color" style="background: #000000;"></div>
+                            <label for="comedones">Comedones</label>
+                        </div>
+                        <div class="legend-item">
+                            <input type="radio" name="finding-type" value="hiperpigmentacion" id="hiperpigmentacion" />
+                            <div class="legend-color" style="background: #8B4513;"></div>
+                            <label for="hiperpigmentacion">Hiperpigmentación</label>
+                        </div>
+                        <div class="legend-item">
+                            <input type="radio" name="finding-type" value="nevus" id="nevus" />
+                            <div class="legend-color" style="background: #654321;"></div>
+                            <label for="nevus">Nevus</label>
+                        </div>
+                        <div class="legend-item">
+                            <input type="radio" name="finding-type" value="papula" id="papula" />
+                            <div class="legend-color" style="background: #FFD700;"></div>
+                            <label for="papula">Pápula</label>
+                        </div>
+                        <div class="legend-item">
+                            <input type="radio" name="finding-type" value="lineas-expresion" id="lineas-expresion" />
+                            <div class="legend-color" style="background: #00BFFF;"></div>
+                            <label for="lineas-expresion">Líneas Expresión</label>
+                        </div>
+                        <div class="legend-item">
+                            <input type="radio" name="finding-type" value="efelides" id="efelides" />
+                            <div class="legend-color" style="background: #DEB887;"></div>
+                            <label for="efelides">Efelides</label>
+                        </div>
+                    </div>
+
+                    <div class="face-zones">
+                        <h4 style="color: #667eea; margin-bottom: 10px;">Zonas del Rostro</h4>
+                        <div class="zone-selector">
+                            <button type="button" class="zone-btn" onclick="selectZone('frente')">👉 Frente</button>
+                            <button type="button" class="zone-btn" onclick="selectZone('ojos')">👉 Ojos</button>
+                            <button type="button" class="zone-btn" onclick="selectZone('nariz')">👉 Nariz</button>
+                            <button type="button" class="zone-btn" onclick="selectZone('mejillas')">👉 Mejillas</button>
+                            <button type="button" class="zone-btn" onclick="selectZone('boca')">👉 Boca</button>
+                            <button type="button" class="zone-btn" onclick="selectZone('menton')">👉 Mentón</button>
+                        </div>
+                    </div>
+
+                    <div class="face-info">
+                        <h3>Hallazgos Registrados</h3>
+                        <ul class="findings-list" id="findings-list">
+                            <li style="color: #999;">Sin hallazgos registrados aún...</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="buttons" style="margin-top: 30px;">
+                <button class="btn-secondary" onclick="goToStep(2)">Atrás</button>
+                <button class="btn-primary" onclick="clearCanvas()">Limpiar Lienzo</button>
+                <button class="btn-primary" onclick="saveFaceData()">Guardar Diagnóstico</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== GESTIÓN DE PASOS ====================
+        function goToStep(step) {
+            if (step === 1 || step === 2) {
+                document.querySelectorAll('.content').forEach(el => el.classList.remove('active'));
+                document.getElementById(`step-${step}`).classList.add('active');
+                document.querySelectorAll('.step').forEach((el, index) => {
+                    el.classList.toggle('active', index + 1 === step);
+                });
+            }
+        }
+
+        function validateAndGoToStep(step) {
+            const consentCheckbox = document.getElementById('consent-agree');
+            if (!consentCheckbox.checked) {
+                alert('Por favor, acepta los términos y condiciones para continuar.');
+                return;
+            }
+            goToStep(step);
+        }
+
+        // ==================== GESTIÓN DE FORMULARIO ====================
+        document.getElementById('personal-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                nombre: document.getElementById('nombre').value,
+                edad: document.getElementById('edad').value,
+                email: document.getElementById('email').value,
+                telefono: document.getElementById('telefono').value,
+                fecha: document.getElementById('fecha').value,
+                tipo_piel: document.getElementById('tipo-piel').value,
+                alergias: document.getElementById('alergias').value,
+                medicamentos: document.getElementById('medicamentos').value,
+                antecedentes: document.getElementById('antecedentes').value,
+                objetivos: document.getElementById('objetivos').value,
+                tratamientos_previos: document.getElementById('tratamientos-previos').value,
+                timestamp: new Date().toISOString()
+            };
+
+            // Guardar en localStorage
+            localStorage.setItem('formData', JSON.stringify(formData));
+
+            // Enviar al servidor
+            sendDataToServer(formData);
+
+            // Ir al siguiente paso
+            goToStep(3);
+        });
+
+        function sendDataToServer(data) {
+            // Reemplaza con tu URL de servidor/Google Sheets
+            const serverURL = 'https://script.google.com/macros/s/YOUR_GOOGLE_APPS_SCRIPT_ID/ussupp';
+            
+            fetch(serverURL, {
+                method: 'POST',
+                body: JSON.stringify(data),
+                mode: 'no-cors'
+            })
+            .then(response => {
+                console.log('Datos enviados exitosamente');
+                showMessage('Datos personales guardados correctamente', 'success');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showMessage('Error al enviar datos. Se guardaron localmente.', 'error');
+            });
+        }
+
+        function showMessage(message, type) {
+            const msgEl = document.getElementById(`${type}-msg`);
+            msgEl.textContent = message;
+            msgEl.style.display = 'block';
+            setTimeout(() => {
+                msgEl.style.display = 'none';
+            }, 5000);
+        }
+
+        function resetForm() {
+            if (confirm('¿Deseas cancelar y limpiar el formulario?')) {
+                document.getElementById('personal-form').reset();
+                document.getElementById('consent-agree').checked = false;
+                localStorage.removeItem('formData');
+                goToStep(1);
+            }
+        }
+
+        // ==================== GESTIÓN DE CANVAS - MAPA FACIAL ====================
+        const canvas = document.getElementById('faceCanvas');
+        const ctx = canvas.getContext('2d');
+        let findings = [];
+        let selectedType = null;
+        let selectedZone = null;
+
+        // Configurar dimensiones del canvas
+        function resizeCanvas() {
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            drawFace();
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        function drawFace() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const scale = Math.min(canvas.width, canvas.height) / 280;
+
+            // Dibujar rostro base
+            ctx.strokeStyle = '#999';
+            ctx.lineWidth = 3;
+            ctx.fillStyle = '#fde8d4';
+            
+            // Cara ovalada
+            ctx.beginPath();
+            ctx.ellipse(centerX, centerY, 60 * scale, 80 * scale, 0, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+
+            // Ojos
+            ctx.fillStyle = '#333';
+            ctx.beginPath();
+            ctx.arc(centerX - 25 * scale, centerY - 20 * scale, 8 * scale, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(centerX + 25 * scale, centerY - 20 * scale, 8 * scale, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Nariz
+            ctx.strokeStyle = '#999';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY - 15 * scale);
+            ctx.lineTo(centerX, centerY + 10 * scale);
+            ctx.stroke();
+
+            // Boca
+            ctx.beginPath();
+            ctx.arc(centerX, centerY + 35 * scale, 20 * scale, 0, Math.PI);
+            ctx.stroke();
+
+            // Líneas de zonas
+            ctx.strokeStyle = '#ddd';
+            ctx.lineWidth = 1;
+            
+            // División vertical (izquierda/derecha)
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY - 80 * scale);
+            ctx.lineTo(centerX, centerY + 80 * scale);
+            ctx.stroke();
+
+            // Divisiones horizontales
+            ctx.beginPath();
+            ctx.moveTo(centerX - 60 * scale, centerY - 20 * scale);
+            ctx.lineTo(centerX + 60 * scale, centerY - 20 * scale);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(centerX - 60 * scale, centerY + 20 * scale);
+            ctx.lineTo(centerX + 60 * scale, centerY + 20 * scale);
+            ctx.stroke();
+
+            // Dibujar hallazgos
+            drawFindings();
+        }
+
+        function drawFindings() {
+            const colorMap = {
+                'acne': '#FF0000',
+                'cicatriz': '#800080',
+                'poros': '#FFA500',
+                'telangiectasis': '#FF6B6B',
+                'comedones': '#000000',
+                'hiperpigmentacion': '#8B4513',
+                'nevus': '#654321',
+                'papula': '#FFD700',
+                'lineas-expresion': '#00BFFF',
+                'efelides': '#DEB887'
+            };
+
+            findings.forEach(finding => {
+                ctx.fillStyle = colorMap[finding.type];
+                ctx.beginPath();
+                ctx.arc(finding.x, finding.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Borde
+                ctx.strokeStyle = '#333';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+            });
+        }
+
+        // Eventos del canvas
+        canvas.addEventListener('mousedown', (e) => {
+            if (!selectedType) {
+                alert('Por favor, selecciona un tipo de imperfección primero.');
+                return;
+            }
+
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            findings.push({
+                type: selectedType,
+                x: x,
+                y: y,
+                zone: selectedZone || 'sin especificar'
+            });
+
+            updateFindingsList();
+            drawFace();
+        });
+
+        // Seleccionar tipo de hallazgo
+        document.querySelectorAll('input[name="finding-type"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                selectedType = e.target.value;
+            });
+        });
+
+        function selectZone(zone) {
+            selectedZone = zone;
+            document.querySelectorAll('.zone-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        function updateFindingsList() {
+            const findingsList = document.getElementById('findings-list');
+            
+            if (findings.length === 0) {
+                findingsList.innerHTML = '<li style="color: #999;">Sin hallazgos registrados aún...</li>';
+                return;
+            }
+
+            const typeNames = {
+                'acne': 'Acné',
+                'cicatriz': 'Cicatriz',
+                'poros': 'Poros Abiertos',
+                'telangiectasis': 'Telangiectasis',
+                'comedones': 'Comedones',
+                'hiperpigmentacion': 'Hiperpigmentación',
+                'nevus': 'Nevus',
+                'papula': 'Pápula',
+                'lineas-expresion': 'Líneas de Expresión',
+                'efelides': 'Efelides'
+            };
+
+            findingsList.innerHTML = findings.map((f, i) => {
+                return `<li>
+                    <strong>${typeNames[f.type]}</strong> - Zona: ${f.zone}
+                    <button onclick="removeFinding(${i})" style="float: right; background: #ff6b6b; color: white; border: none; padding: 2px 8px; border-radius: 3px; cursor: pointer; font-size: 0.8em;">Eliminar</button>
+                </li>`;
+            }).join('');
+        }
+
+        function removeFinding(index) {
+            findings.splice(index, 1);
+            updateFindingsList();
+            drawFace();
+        }
+
+        function clearCanvas() {
+            if (confirm('¿Deseas limpiar todos los hallazgos?')) {
+                findings = [];
+                selectedType = null;
+                selectedZone = null;
+                document.querySelectorAll('input[name="finding-type"]').forEach(r => r.checked = false);
+                document.querySelectorAll('.zone-btn').forEach(btn => btn.classList.remove('active'));
+                updateFindingsList();
+                drawFace();
+            }
+        }
+
+        function saveFaceData() {
+            const formData = JSON.parse(localStorage.getItem('formData') || '{}');
+            const allData = {
+                ...formData,
+                findings: findings,
+                timestamp: new Date().toISOString()
+            };
+
+            localStorage.setItem('completeFormData', JSON.stringify(allData));
+
+            // Enviar al servidor
+            const serverURL = 'https://script.google.com/macros/s/YOUR_GOOGLE_APPS_SCRIPT_ID/ussupp';
+            
+            fetch(serverURL, {
+                method: 'POST',
+                body: JSON.stringify(allData),
+                mode: 'no-cors'
+            })
+            .then(() => {
+                alert('¡Historia clínica completada y guardada exitosamente!');
+                console.log('Datos guardados:', allData);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Datos guardados localmente. Se encontró un error al enviar al servidor.');
+            });
+        }
+
+        // Cargar datos si existen
+        window.addEventListener('load', () => {
+            const savedData = localStorage.getItem('formData');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                document.getElementById('nombre').value = data.nombre || '';
+                document.getElementById('edad').value = data.edad || '';
+                document.getElementById('email').value = data.email || '';
+                document.getElementById('telefono').value = data.telefono || '';
+            }
+        });
+    </script>
+</body>
+</html>
