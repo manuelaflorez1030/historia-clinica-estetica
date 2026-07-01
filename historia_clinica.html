@@ -235,11 +235,8 @@
             border: 3px solid #667eea;
             border-radius: 10px;
             cursor: crosshair;
-            background: white;
+            background: #faf5f0;
             display: block;
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
         }
 
         .legend {
@@ -631,9 +628,6 @@
     </div>
 
     <script>
-        // Imagen base64 del rostro femenino (imagen simple en blanco y negro)
-        const faceImageUrl = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDMwMCA0MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+DQogIDwhLS0gRm9uZG8gLS0+DQogIDxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iNDAwIiBmaWxsPSJ3aGl0ZSIvPg0KICAKICAGPCETLSBDYXJHEW8gLS0+DQogIDxwYXRoIGQ9Ik0gNzUgNTAgTCA3NSAxNjAgUyA2MCAxOTAgNjAgMjEwIFEgNjAgMjQwIDkwIDI2MCBMIDE1MCAyODAgTCAyMTAgMjYwIFEgMjQwIDI0MCAyNDAgMjEwIFMgMjI1IDE2MCAyMjUgNTAgUSAxNTAgMjAgNzUgNTAiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+DQogIAogICA8IS0tIENhYmVsbG8gLS0+DQogIDxlbGxpcHNlIGN4PSIxNTAiIGN5PSI0MCIgcng9IjcwIiByeT0iMzUiIGZpbGw9IiM4QjQ1MTMiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIxIi8+DQogIAogICA8IS0tIE9yZWphIGl6cXVpZXJkYSAtLT4KICAKICAGPCBJC0NvdWxkJ3QgZWxsaXBzZSBjeD0iNTAiIGN5PSIxMTAiIHJ4PSIxNSIgcnk9IjI1IiBmaWxsPSJub25lIiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMSIvPg0KICAKICACPC1PcmVqYSBkZXJlY2hhIC0tPgogIDxlbGxpcHNlIGN4PSIyNTAiIGN5PSIxMTAiIHJ4PSIxNSIgcnk9IjI1IiBmaWxsPSJub25lIiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMSIvPgogIAogICA8IS0tIENlams6IEl6cXVpZXJkYSAtLT4KICAKICAGQSBDRUNAS6AgZTQgMTAwIFogSCkxMiBWIDEyNiBIIDEzOCBWIDEwMCBaIiBmaWxsPSJub25lIiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+DQogIAogICA8IS0tIENlau86IERlcmVjaGEgLS0+DQogIDxwYXRoIGQ9Ik0gMTYyIDEwMCBaIEggMTg4IFYgMTI2IEggMTYyIFYgMTAwIFoiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICAKICAGPC1WQW1wYXN0YXMgLS0+DQogIDxwYXRoIGQ9Ik0gMTAwIDk1IFEgMTEyIDg3IDExOCA5NSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjEuNSIvPgogIDxwYXRoIGQ9Ik0gMTgyIDk1IFEgMTg4IDg3IDE4MiA5NSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjEuNSIvPgogIAogICA8IS0tIElycmlzIElaUVVJRVJEQSAtLT4KICAKICAGRCBCZWBJTFZFVBFQ1xsvesxdUElxREExMCBMIDEwNCAxMDAganVzdCBvcHRpb25KICAKICAKPGGKCGIBI0QgQ0FWIERFUkVDSEEgLS0+CiAgDQogIDxjaXJjbGUgY3g9IjE4MCIgY3k9IjEwMiIgcj0iNiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjEiLz4KICAKICAKPGCZQR1QSQUONLS0+CiAgPGNpcmNsZSBjeD0iMTIwIiBjeT0iMTAyIiByPSI0IiBmaWxsPSIjMzMzIi8+CiAgPGNpcmNsZSBjeD0iMTgwIiBjeT0iMTAyIiByPSI0IiBmaWxsPSIjMzMzIi8+CiAgCiAgIDwhLS0gTHV6IGVuIG9qb3MgLS0+CiAgPGNpcmNsZSBjeD0iMTEyIiBjeT0iOTgiIHI9IjIiIGZpbGw9IndoaXRlIi8+CiAgPGNpcmNsZSBjeD0iMTc4IiBjeT0iOTgiIHI9IjIiIGZpbGw9IndoaXRlIi8+CiAgCiAgIDwhLS0gUGVzdGHDsWFzIC0tPgogIDxwYXRoIGQ9Ik0gMTEwIDk2IEwgMTA4IDkwIiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMC41IiBmaWxsPSJub25lIi8+CiAgPHBhdGggZD0iTSAxMjAgOTYgTCAxMjMgODkiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIwLjUiIGZpbGw9Im5vbmUiLz4KICAKICAKPGZBOIBS8OhcmFzcyAtLT4KICAKICAGRCBTZWFACVDYWSAE4sTQwIiwgTCAxNTAgMTUwLHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIxIiBmaWxsPSJub25lIi8+CiAgCiAgIDwhLS0gT2lmaWNpb3MgTmFzYWxlcyAtLT4KICAKICAKRCZUQ2lyY2xlIGN4PSIxNDQiIGN5PSIxNDgiIHI9IjIiIGZpbGw9IiNEMkI0OEMiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIwLjUiLz4KICAKICAKRE1FalEEURJK0NyY2xlIGN4PSIxNTYiIGN5PSIxNDgiIHI9IjIiIGZpbGw9IiNEMkI0OEMiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIwLjUiLz4KICAKICAKPS1SZXRvMiBLS0+CiAgPHBhdGggZD0iTSAxNTAgMTcwIEEgMjAgMjAgMCAwIDEgMTkwIDE3MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjQzg1QTU0IiBzdHJva2Utd2lkdGg9IjIiLz4KICAKICAKPCSUQNUQRDU9RT1RSRyBMQ3NJZFVK0M0IFUgMCAwIDAgMCAxLCAxNTAgMjUwLCBmaWxsPSJub25lIiBzdHJva2U9IiNDODVBNTQiIHN0cm9rZS13aWR0aD0iMC41Ii8+CiAgCiAgIDwhLS0gQ9S5dDI6IFhvQSAtLT4KICAKICAKRDBZSUKCNVN0ZUlSVUBUMEwyIODuJENpcmNsZSBjeD0iMTUwIiBjeT0iMTcwIiByPSI3IiBmaWxsPSJyZ2JhKDIwMCwxMDAtczEqMGEuMykiIHN0cm9rZT0ibm9uZSIvPgogIAogICA8IS0tIE1lamlsbGFzIChSdWJvcigSUwogIDxjaXJjbGUgY3g9IjEwNSIgY3k9IjE1MCIgcj0iMTUiIGZpbGw9InJnYmEoMjU1LCAxODIsIDE5MywgMC4zKSIgc3Ryb2tlPSJub25lIi8+CiAgPGNpcmNsZSBjeD0iMTk1IiBjeT0iMTUwIiByPSIxNSIgZmlsbD0icmdiYSgyNTUsIDE4MiwgMTkzLCAwLjMpIiBzdHJva2U9Im5vbmUiLz4KICAKICAKPS1RL1JlWwZq0Wd0IHN0cm9rZWw9brF6d1gwID0gbm9uZSIvPgogIAogICA8IS0tIElMQ1pnfCBEaXZpc29yaWEgLS0+CiAgPGxpbmUgeDE9IjE1MCIgeTE9IjUwIiB4Mj0iMTUwIiB5Mj0iMzAwIiBzdHJva2U9IiNFRUUiIHN0cm9rZS13aWR0aD0iMSIgc3Ryb2tlLWRhc2hhcnJheT0iNSw1Ii8+CiAgCjwvc3ZnPg==';
-
         // ==================== GESTIÓN DE PASOS ====================
         function goToStep(step) {
             document.querySelectorAll('.content').forEach(function(el) {
@@ -645,10 +639,10 @@
                 el.classList.toggle('active', index + 1 === step);
             });
 
-            // Cargar imagen cuando se va al paso 3
+            // Dibujar rostro cuando se va al paso 3
             if (step === 3) {
                 setTimeout(function() {
-                    loadFaceImage();
+                    drawFace();
                 }, 100);
             }
         }
@@ -733,15 +727,184 @@
         var findings = [];
         var selectedType = null;
         var selectedZone = null;
-        var faceImage = new Image();
 
-        function loadFaceImage() {
-            faceImage.onload = function() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                ctx.drawImage(faceImage, 0, 0, canvas.width, canvas.height);
-                drawFindings();
-            };
-            faceImage.src = faceImageUrl;
+        function drawFace() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            var centerX = canvas.width / 2;
+            var centerY = canvas.height / 2;
+            var scale = Math.min(canvas.width, canvas.height) / 280;
+
+            // ===== FONDO PIEL =====
+            ctx.fillStyle = '#E8C9B8';
+            ctx.beginPath();
+            drawEllipse(centerX, centerY, 70 * scale, 90 * scale);
+            ctx.fill();
+            
+            // Borde cara
+            ctx.strokeStyle = '#8B6F47';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // ===== OREJAS =====
+            ctx.fillStyle = '#E8C9B8';
+            ctx.beginPath();
+            drawEllipse(centerX - 72 * scale, centerY - 10 * scale, 15 * scale, 30 * scale);
+            ctx.fill();
+            ctx.stroke();
+            
+            ctx.beginPath();
+            drawEllipse(centerX + 72 * scale, centerY - 10 * scale, 15 * scale, 30 * scale);
+            ctx.fill();
+            ctx.stroke();
+
+            // ===== CABELLO =====
+            ctx.fillStyle = '#2C1810';
+            ctx.beginPath();
+            ctx.arc(centerX, centerY - 65 * scale, 65 * scale, Math.PI, 0, true);
+            ctx.fill();
+
+            // ===== FRENTE =====
+            ctx.fillStyle = '#E8C9B8';
+            ctx.fillRect(centerX - 50 * scale, centerY - 50 * scale, 100 * scale, 25 * scale);
+
+            // ===== CEJAS =====
+            ctx.strokeStyle = '#2C1810';
+            ctx.lineWidth = 3 * scale;
+            ctx.beginPath();
+            ctx.arc(centerX - 25 * scale, centerY - 25 * scale, 12 * scale, 0.2 * Math.PI, 0.8 * Math.PI);
+            ctx.stroke();
+            
+            ctx.beginPath();
+            ctx.arc(centerX + 25 * scale, centerY - 25 * scale, 12 * scale, 0.2 * Math.PI, 0.8 * Math.PI);
+            ctx.stroke();
+
+            // ===== OJOS BLANCOS =====
+            ctx.fillStyle = '#FFFFFF';
+            ctx.beginPath();
+            drawEllipse(centerX - 25 * scale, centerY - 18 * scale, 12 * scale, 14 * scale);
+            ctx.fill();
+            ctx.strokeStyle = '#8B6F47';
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+
+            ctx.beginPath();
+            drawEllipse(centerX + 25 * scale, centerY - 18 * scale, 12 * scale, 14 * scale);
+            ctx.fill();
+            ctx.stroke();
+
+            // ===== IRIS =====
+            ctx.fillStyle = '#6B4423';
+            ctx.beginPath();
+            ctx.arc(centerX - 25 * scale, centerY - 18 * scale, 7 * scale, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.arc(centerX + 25 * scale, centerY - 18 * scale, 7 * scale, 0, Math.PI * 2);
+            ctx.fill();
+
+            // ===== PUPILA =====
+            ctx.fillStyle = '#000000';
+            ctx.beginPath();
+            ctx.arc(centerX - 25 * scale, centerY - 18 * scale, 4 * scale, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.arc(centerX + 25 * scale, centerY - 18 * scale, 4 * scale, 0, Math.PI * 2);
+            ctx.fill();
+
+            // ===== BRILLO EN OJOS =====
+            ctx.fillStyle = '#FFFFFF';
+            ctx.beginPath();
+            ctx.arc(centerX - 23 * scale, centerY - 20 * scale, 2.5 * scale, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.arc(centerX + 27 * scale, centerY - 20 * scale, 2.5 * scale, 0, Math.PI * 2);
+            ctx.fill();
+
+            // ===== NARIZ =====
+            ctx.strokeStyle = '#8B6F47';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY - 15 * scale);
+            ctx.lineTo(centerX, centerY + 8 * scale);
+            ctx.stroke();
+
+            // ===== ORIFICIOS NASALES =====
+            ctx.fillStyle = '#D4A574';
+            ctx.beginPath();
+            ctx.arc(centerX - 4 * scale, centerY + 8 * scale, 2.5 * scale, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.arc(centerX + 4 * scale, centerY + 8 * scale, 2.5 * scale, 0, Math.PI * 2);
+            ctx.fill();
+
+            // ===== MEJILLAS (RUBOR) =====
+            ctx.fillStyle = 'rgba(255, 200, 200, 0.4)';
+            ctx.beginPath();
+            ctx.arc(centerX - 45 * scale, centerY + 5 * scale, 15 * scale, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.arc(centerX + 45 * scale, centerY + 5 * scale, 15 * scale, 0, Math.PI * 2);
+            ctx.fill();
+
+            // ===== BOCA =====
+            ctx.strokeStyle = '#C85A54';
+            ctx.lineWidth = 2.5;
+            ctx.beginPath();
+            ctx.arc(centerX, centerY + 35 * scale, 22 * scale, 0, Math.PI);
+            ctx.stroke();
+
+            // ===== LABIOS (RELLENO) =====
+            ctx.fillStyle = 'rgba(200, 90, 84, 0.25)';
+            ctx.beginPath();
+            ctx.arc(centerX, centerY + 35 * scale, 22 * scale, 0, Math.PI);
+            ctx.fill();
+
+            // ===== LÍNEA DIVISORIA VERTICAL =====
+            ctx.strokeStyle = '#DDD';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY - 80 * scale);
+            ctx.lineTo(centerX, centerY + 80 * scale);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // ===== DIVISIONES HORIZONTALES =====
+            ctx.strokeStyle = '#DDD';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(centerX - 70 * scale, centerY - 20 * scale);
+            ctx.lineTo(centerX + 70 * scale, centerY - 20 * scale);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(centerX - 70 * scale, centerY + 20 * scale);
+            ctx.lineTo(centerX + 70 * scale, centerY + 20 * scale);
+            ctx.stroke();
+
+            // Dibujar hallazgos
+            drawFindings();
+        }
+
+        // Función helper para dibujar elipses
+        function drawEllipse(cx, cy, radiusX, radiusY) {
+            var step = 0.05;
+            var angle;
+            for (angle = 0; angle < Math.PI * 2; angle += step) {
+                var nextX = radiusX * Math.cos(angle);
+                var nextY = radiusY * Math.sin(angle);
+                if (angle === 0) {
+                    ctx.moveTo(cx + nextX, cy + nextY);
+                } else {
+                    ctx.lineTo(cx + nextX, cy + nextY);
+                }
+            }
+            ctx.closePath();
         }
 
         function drawFindings() {
@@ -790,8 +953,7 @@
             });
 
             updateFindingsList();
-            loadFaceImage(); // Redibujar con la imagen de fondo
-            drawFindings(); // Redibujar los hallazgos
+            drawFace();
         });
 
         // Seleccionar tipo de hallazgo
@@ -843,8 +1005,7 @@
         function removeFinding(index) {
             findings.splice(index, 1);
             updateFindingsList();
-            loadFaceImage();
-            drawFindings();
+            drawFace();
         }
 
         function clearCanvas() {
@@ -861,7 +1022,7 @@
                     buttons[i].classList.remove('active');
                 }
                 updateFindingsList();
-                loadFaceImage();
+                drawFace();
             }
         }
 
