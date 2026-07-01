@@ -737,58 +737,164 @@
             var centerY = canvas.height / 2;
             var scale = Math.min(canvas.width, canvas.height) / 280;
 
-            // Dibujar rostro base
-            ctx.strokeStyle = '#999';
-            ctx.lineWidth = 3;
-            ctx.fillStyle = '#fde8d4';
-            
-            // Cara ovalada
+            // Fondo piel
+            ctx.fillStyle = '#F5DEB3';
             ctx.beginPath();
-            ctx.ellipse(centerX, centerY, 60 * scale, 80 * scale, 0, 0, Math.PI * 2);
+            ctx.ellipse(centerX, centerY, 70 * scale, 90 * scale, 0, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Borde cara
+            ctx.strokeStyle = '#D2B48C';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // Orejas
+            ctx.fillStyle = '#F5DEB3';
+            ctx.beginPath();
+            ctx.ellipse(centerX - 72 * scale, centerY - 10 * scale, 15 * scale, 30 * scale, 0, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+            
+            ctx.beginPath();
+            ctx.ellipse(centerX + 72 * scale, centerY - 10 * scale, 15 * scale, 30 * scale, 0, 0, Math.PI * 2);
             ctx.fill();
             ctx.stroke();
 
+            // Cabello (forma femenina)
+            ctx.fillStyle = '#8B4513';
+            ctx.beginPath();
+            ctx.ellipse(centerX, centerY - 65 * scale, 65 * scale, 45 * scale, 0, 0, Math.PI);
+            ctx.fill();
+
+            // Frente
+            ctx.fillStyle = '#F5DEB3';
+            ctx.fillRect(centerX - 50 * scale, centerY - 50 * scale, 100 * scale, 25 * scale);
+
+            // Cejas
+            ctx.strokeStyle = '#654321';
+            ctx.lineWidth = 3 * scale;
+            ctx.beginPath();
+            ctx.arc(centerX - 25 * scale, centerY - 25 * scale, 12 * scale, 0.2 * Math.PI, 0.8 * Math.PI);
+            ctx.stroke();
+            
+            ctx.beginPath();
+            ctx.arc(centerX + 25 * scale, centerY - 25 * scale, 12 * scale, 0.2 * Math.PI, 0.8 * Math.PI);
+            ctx.stroke();
+
             // Ojos
-            ctx.fillStyle = '#333';
+            ctx.fillStyle = 'white';
             ctx.beginPath();
-            ctx.arc(centerX - 25 * scale, centerY - 20 * scale, 8 * scale, 0, Math.PI * 2);
+            ctx.ellipse(centerX - 25 * scale, centerY - 18 * scale, 12 * scale, 14 * scale, 0, 0, Math.PI * 2);
             ctx.fill();
+            ctx.strokeStyle = '#999';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+
             ctx.beginPath();
-            ctx.arc(centerX + 25 * scale, centerY - 20 * scale, 8 * scale, 0, Math.PI * 2);
+            ctx.ellipse(centerX + 25 * scale, centerY - 18 * scale, 12 * scale, 14 * scale, 0, 0, Math.PI * 2);
             ctx.fill();
+            ctx.stroke();
+
+            // Iris
+            ctx.fillStyle = '#4169E1';
+            ctx.beginPath();
+            ctx.arc(centerX - 25 * scale, centerY - 18 * scale, 7 * scale, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.arc(centerX + 25 * scale, centerY - 18 * scale, 7 * scale, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Pupila
+            ctx.fillStyle = 'black';
+            ctx.beginPath();
+            ctx.arc(centerX - 25 * scale, centerY - 18 * scale, 4 * scale, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.arc(centerX + 25 * scale, centerY - 18 * scale, 4 * scale, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Brillo en ojos
+            ctx.fillStyle = 'white';
+            ctx.beginPath();
+            ctx.arc(centerX - 23 * scale, centerY - 20 * scale, 2 * scale, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.arc(centerX + 27 * scale, centerY - 20 * scale, 2 * scale, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Pestaña
+            ctx.strokeStyle = '#000';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo((centerX - 35) * scale, (centerY - 30) * scale);
+            ctx.lineTo((centerX - 30) * scale, (centerY - 32) * scale);
+            ctx.stroke();
 
             // Nariz
             ctx.strokeStyle = '#999';
             ctx.lineWidth = 2;
             ctx.beginPath();
             ctx.moveTo(centerX, centerY - 15 * scale);
-            ctx.lineTo(centerX, centerY + 10 * scale);
+            ctx.lineTo(centerX, centerY + 8 * scale);
             ctx.stroke();
+
+            // Orificios nasales
+            ctx.fillStyle = '#D2B48C';
+            ctx.beginPath();
+            ctx.arc(centerX - 4 * scale, centerY + 8 * scale, 2.5 * scale, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.arc(centerX + 4 * scale, centerY + 8 * scale, 2.5 * scale, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Mejillas (rubor)
+            ctx.fillStyle = 'rgba(255, 182, 193, 0.3)';
+            ctx.beginPath();
+            ctx.arc(centerX - 45 * scale, centerY + 5 * scale, 15 * scale, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.arc(centerX + 45 * scale, centerY + 5 * scale, 15 * scale, 0, Math.PI * 2);
+            ctx.fill();
 
             // Boca
+            ctx.strokeStyle = '#C85A54';
+            ctx.lineWidth = 2;
             ctx.beginPath();
-            ctx.arc(centerX, centerY + 35 * scale, 20 * scale, 0, Math.PI);
+            ctx.arc(centerX, centerY + 35 * scale, 22 * scale, 0, Math.PI);
             ctx.stroke();
 
-            // Líneas de zonas
-            ctx.strokeStyle = '#ddd';
+            // Labios (relleno)
+            ctx.fillStyle = 'rgba(200, 100, 100, 0.3)';
+            ctx.beginPath();
+            ctx.arc(centerX, centerY + 35 * scale, 22 * scale, 0, Math.PI);
+            ctx.fill();
+
+            // Línea divisoria vertical (simetría)
+            ctx.strokeStyle = '#EEE';
             ctx.lineWidth = 1;
-            
-            // División vertical (izquierda/derecha)
+            ctx.setLineDash([5, 5]);
             ctx.beginPath();
             ctx.moveTo(centerX, centerY - 80 * scale);
             ctx.lineTo(centerX, centerY + 80 * scale);
             ctx.stroke();
+            ctx.setLineDash([]);
 
-            // Divisiones horizontales
+            // Divisiones horizontales para zonas
+            ctx.strokeStyle = '#DDD';
+            ctx.lineWidth = 1;
             ctx.beginPath();
-            ctx.moveTo(centerX - 60 * scale, centerY - 20 * scale);
-            ctx.lineTo(centerX + 60 * scale, centerY - 20 * scale);
+            ctx.moveTo(centerX - 70 * scale, centerY - 20 * scale);
+            ctx.lineTo(centerX + 70 * scale, centerY - 20 * scale);
             ctx.stroke();
 
             ctx.beginPath();
-            ctx.moveTo(centerX - 60 * scale, centerY + 20 * scale);
-            ctx.lineTo(centerX + 60 * scale, centerY + 20 * scale);
+            ctx.moveTo(centerX - 70 * scale, centerY + 20 * scale);
+            ctx.lineTo(centerX + 70 * scale, centerY + 20 * scale);
             ctx.stroke();
 
             // Dibujar hallazgos
