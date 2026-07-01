@@ -236,6 +236,7 @@
             border-radius: 10px;
             cursor: crosshair;
             background: #f9f9f9;
+            display: block;
         }
 
         .legend {
@@ -538,7 +539,7 @@
             <div class="face-container">
                 <div>
                     <div class="face-diagram">
-                        <canvas id="faceCanvas" class="face-canvas"></canvas>
+                        <canvas id="faceCanvas" class="face-canvas" width="300" height="400"></canvas>
                     </div>
                     <div class="coordinates" id="coordinates">Coordenadas: Esperando clic...</div>
                 </div>
@@ -637,6 +638,13 @@
             document.querySelectorAll('.step').forEach(function(el, index) {
                 el.classList.toggle('active', index + 1 === step);
             });
+
+            // Redibujar canvas cuando se va al paso 3
+            if (step === 3) {
+                setTimeout(function() {
+                    resizeCanvas();
+                }, 100);
+            }
         }
 
         function validateAndGoToStep(step) {
@@ -722,13 +730,39 @@
 
         // Configurar dimensiones del canvas
         function resizeCanvas() {
-            canvas.width = canvas.offsetWidth;
-            canvas.height = canvas.offsetHeight;
+            var container = canvas.parentElement;
+            canvas.width = container.offsetWidth;
+            canvas.height = container.offsetHeight;
             drawFace();
         }
 
         window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
+
+        // Función helper para dibujar elipses compatible con todos los navegadores
+        function drawEllipse(cx, cy, radiusX, radiusY, rotation) {
+            rotation = rotation || 0;
+            var step = 0.05;
+            var x = radiusX * Math.cos(0);
+            var y = radiusY * Math.sin(0);
+            
+            for (var angle = 0; angle < Math.PI * 2; angle += step) {
+                var nextX = radiusX * Math.cos(angle);
+                var nextY = radiusY * Math.sin(angle);
+                
+                var cosRot = Math.cos(rotation);
+                var sinRot = Math.sin(rotation);
+                
+                var rotX = nextX * cosRot - nextY * sinRot;
+                var rotY = nextX * sinRot + nextY * cosRot;
+                
+                if (angle === 0) {
+                    ctx.moveTo(cx + rotX, cy + rotY);
+                } else {
+                    ctx.lineTo(cx + rotX, cy + rotY);
+                }
+            }
+            ctx.closePath();
+        }
 
         function drawFace() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -737,10 +771,10 @@
             var centerY = canvas.height / 2;
             var scale = Math.min(canvas.width, canvas.height) / 280;
 
-            // Fondo piel
+            // Fondo piel - ROSTRO PRINCIPAL
             ctx.fillStyle = '#F5DEB3';
             ctx.beginPath();
-            ctx.ellipse(centerX, centerY, 70 * scale, 90 * scale, 0, 0, Math.PI * 2);
+            drawEllipse(centerX, centerY, 70 * scale, 90 * scale);
             ctx.fill();
             
             // Borde cara
@@ -748,22 +782,23 @@
             ctx.lineWidth = 2;
             ctx.stroke();
 
-            // Orejas
+            // Orejas izquierda
             ctx.fillStyle = '#F5DEB3';
             ctx.beginPath();
-            ctx.ellipse(centerX - 72 * scale, centerY - 10 * scale, 15 * scale, 30 * scale, 0, 0, Math.PI * 2);
+            drawEllipse(centerX - 72 * scale, centerY - 10 * scale, 15 * scale, 30 * scale);
             ctx.fill();
             ctx.stroke();
             
+            // Orejas derecha
             ctx.beginPath();
-            ctx.ellipse(centerX + 72 * scale, centerY - 10 * scale, 15 * scale, 30 * scale, 0, 0, Math.PI * 2);
+            drawEllipse(centerX + 72 * scale, centerY - 10 * scale, 15 * scale, 30 * scale);
             ctx.fill();
             ctx.stroke();
 
             // Cabello (forma femenina)
             ctx.fillStyle = '#8B4513';
             ctx.beginPath();
-            ctx.ellipse(centerX, centerY - 65 * scale, 65 * scale, 45 * scale, 0, 0, Math.PI);
+            ctx.arc(centerX, centerY - 65 * scale, 65 * scale, Math.PI, 0, true);
             ctx.fill();
 
             // Frente
@@ -781,57 +816,54 @@
             ctx.arc(centerX + 25 * scale, centerY - 25 * scale, 12 * scale, 0.2 * Math.PI, 0.8 * Math.PI);
             ctx.stroke();
 
-            // Ojos
+            // Ojos izquierdo
             ctx.fillStyle = 'white';
             ctx.beginPath();
-            ctx.ellipse(centerX - 25 * scale, centerY - 18 * scale, 12 * scale, 14 * scale, 0, 0, Math.PI * 2);
+            drawEllipse(centerX - 25 * scale, centerY - 18 * scale, 12 * scale, 14 * scale);
             ctx.fill();
             ctx.strokeStyle = '#999';
             ctx.lineWidth = 1;
             ctx.stroke();
 
+            // Ojos derecho
+            ctx.fillStyle = 'white';
             ctx.beginPath();
-            ctx.ellipse(centerX + 25 * scale, centerY - 18 * scale, 12 * scale, 14 * scale, 0, 0, Math.PI * 2);
+            drawEllipse(centerX + 25 * scale, centerY - 18 * scale, 12 * scale, 14 * scale);
             ctx.fill();
             ctx.stroke();
 
-            // Iris
+            // Iris izquierdo
             ctx.fillStyle = '#4169E1';
             ctx.beginPath();
             ctx.arc(centerX - 25 * scale, centerY - 18 * scale, 7 * scale, 0, Math.PI * 2);
             ctx.fill();
 
+            // Iris derecho
             ctx.beginPath();
             ctx.arc(centerX + 25 * scale, centerY - 18 * scale, 7 * scale, 0, Math.PI * 2);
             ctx.fill();
 
-            // Pupila
+            // Pupila izquierda
             ctx.fillStyle = 'black';
             ctx.beginPath();
             ctx.arc(centerX - 25 * scale, centerY - 18 * scale, 4 * scale, 0, Math.PI * 2);
             ctx.fill();
 
+            // Pupila derecha
             ctx.beginPath();
             ctx.arc(centerX + 25 * scale, centerY - 18 * scale, 4 * scale, 0, Math.PI * 2);
             ctx.fill();
 
-            // Brillo en ojos
+            // Brillo en ojos izquierdo
             ctx.fillStyle = 'white';
             ctx.beginPath();
             ctx.arc(centerX - 23 * scale, centerY - 20 * scale, 2 * scale, 0, Math.PI * 2);
             ctx.fill();
 
+            // Brillo en ojos derecho
             ctx.beginPath();
             ctx.arc(centerX + 27 * scale, centerY - 20 * scale, 2 * scale, 0, Math.PI * 2);
             ctx.fill();
-
-            // Pestaña
-            ctx.strokeStyle = '#000';
-            ctx.lineWidth = 1;
-            ctx.beginPath();
-            ctx.moveTo((centerX - 35) * scale, (centerY - 30) * scale);
-            ctx.lineTo((centerX - 30) * scale, (centerY - 32) * scale);
-            ctx.stroke();
 
             // Nariz
             ctx.strokeStyle = '#999';
@@ -841,22 +873,24 @@
             ctx.lineTo(centerX, centerY + 8 * scale);
             ctx.stroke();
 
-            // Orificios nasales
+            // Orificios nasales izquierdo
             ctx.fillStyle = '#D2B48C';
             ctx.beginPath();
             ctx.arc(centerX - 4 * scale, centerY + 8 * scale, 2.5 * scale, 0, Math.PI * 2);
             ctx.fill();
 
+            // Orificios nasales derecho
             ctx.beginPath();
             ctx.arc(centerX + 4 * scale, centerY + 8 * scale, 2.5 * scale, 0, Math.PI * 2);
             ctx.fill();
 
-            // Mejillas (rubor)
+            // Mejillas izquierda (rubor)
             ctx.fillStyle = 'rgba(255, 182, 193, 0.3)';
             ctx.beginPath();
             ctx.arc(centerX - 45 * scale, centerY + 5 * scale, 15 * scale, 0, Math.PI * 2);
             ctx.fill();
 
+            // Mejillas derecha
             ctx.beginPath();
             ctx.arc(centerX + 45 * scale, centerY + 5 * scale, 15 * scale, 0, Math.PI * 2);
             ctx.fill();
@@ -1058,7 +1092,7 @@
             });
         }
 
-        // Cargar datos si existen
+        // Cargar datos si existen y dibujar el rostro
         window.addEventListener('load', function() {
             var savedData = localStorage.getItem('formData');
             if (savedData) {
@@ -1068,6 +1102,7 @@
                 document.getElementById('email').value = data.email || '';
                 document.getElementById('telefono').value = data.telefono || '';
             }
+            resizeCanvas();
         });
     </script>
 </body>
