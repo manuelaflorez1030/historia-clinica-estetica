@@ -629,13 +629,14 @@
     <script>
         // ==================== GESTIÓN DE PASOS ====================
         function goToStep(step) {
-            if (step === 1 || step === 2) {
-                document.querySelectorAll('.content').forEach(el => el.classList.remove('active'));
-                document.getElementById('step-' + step).classList.add('active');
-                document.querySelectorAll('.step').forEach((el, index) => {
-                    el.classList.toggle('active', index + 1 === step);
-                });
-            }
+            document.querySelectorAll('.content').forEach(function(el) {
+                el.classList.remove('active');
+            });
+            document.getElementById('step-' + step).classList.add('active');
+            
+            document.querySelectorAll('.step').forEach(function(el, index) {
+                el.classList.toggle('active', index + 1 === step);
+            });
         }
 
         function validateAndGoToStep(step) {
